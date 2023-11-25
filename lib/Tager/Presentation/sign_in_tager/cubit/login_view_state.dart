@@ -7,8 +7,8 @@ class InitializeLoginViewState extends LoginViewState {}
 class LoginViewStateLoading extends LoginViewState {}
 
 class LoginViewStateSuccess extends LoginViewState {
-  final UserLoginModel userLoginModel;
-  LoginViewStateSuccess(this.userLoginModel);
+  final String message;
+  LoginViewStateSuccess({required this.message});
 }
 
 class LoginViewStateError extends LoginViewState {
@@ -20,14 +20,6 @@ class ChangeIconPasswordSuccess extends LoginViewState {}
 
 class SendAddressLoading extends LoginViewState {}
 
-class SendAddressSuccessfully extends LoginViewState {
-  final String message;
+class SendAddressSuccessfully extends LoginViewState {}
 
-  SendAddressSuccessfully({required this.message});
-}
-
-class SendAddressError extends LoginViewState {
-  final String error;
-
-  SendAddressError({required this.error});
-}
+class SendAddressError extends LoginViewState {}

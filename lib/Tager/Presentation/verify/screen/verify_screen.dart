@@ -51,6 +51,8 @@ class VerifyScreen extends StatelessWidget {
                 ),
               ),
               body: Container(
+                height: double.infinity,
+                width: double.infinity,
                 decoration: const BoxDecoration(
                   gradient: LinearGradient(
                       colors: [
@@ -68,84 +70,79 @@ class VerifyScreen extends StatelessWidget {
                 ),
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 10),
-                  child: Stack(
-                    children: [
-                      const MyAnimatedBackground(
-                          path1: "assets/images/img_inner_60_146x149.png",
-                          path2: "assets/images/img_inner_60_155x156.png"),
-                      Column(
-                        children: [
-                          customHeadScreen(),
-                          SizedBox(
-                            height: 50.h,
-                          ),
-                          Text(
-                            'Enter money amount',
-                            style: Styles.textStyleTitle20,
-                          ),
-                          SizedBox(
-                            height: 20.h,
-                          ),
-                          Form(
-                            key: keyForm,
-                            child: CustomTextFormField(
-                                hintText: 'Enter money amount',
-                                prefix: const Icon(Icons.money,
-                                    color: Color(0xffC19843)),
-                                textInputType: TextInputType.number,
-                                controller: verifyController,
-                                validator: (value) {
-                                  if (value!.isEmpty) {
-                                    return ' amount Is Required';
-                                  } else {
-                                    return null;
-                                  }
-                                }),
-                          ),
-                          const Spacer(
-                            flex: 1,
-                          ),
-                          Column(
-                            children: [
-                              Platform.isAndroid
-                                  ? SizedBox.shrink()
-                                  : 
-                                  Button(
-                                      textButton: 'NFC card',
-                                      funcation: () {
-                                        if (keyForm.currentState!.validate()) {
-                                          BlocProvider.of<NfcCubit>(context)
-                                              .goToNfc();
-                                          print('gamallllDone');
-                                          navigato(
-                                              context,
-                                              NfcScreen(
-                                                amount: verifyController.text,
-                                              ));
-                                        }
-                                      }),
-                              const SizedBox(
-                                height: 10.0,
-                              ),
-                              ButtonSide(
-                                  textButton: 'QR code',
-                                  funcation: () {
-                                    if (keyForm.currentState!.validate()) {
-                                      navigato(
-                                          context,
-                                          QrScreen(
-                                            amount: verifyController.text,
-                                          ));
+                  child: SingleChildScrollView(
+                    child: Stack(
+                      children: [
+                        const MyAnimatedBackground(
+                            path1: "assets/images/img_inner_60_146x149.png",
+                            path2: "assets/images/img_inner_60_155x156.png"),
+                        Column(
+                          children: [
+                            customHeadScreen(),
+                            SizedBox(
+                              height: 50.h,
+                            ),
+                            Text(
+                              'Enter money amount',
+                              style: Styles.textStyleTitle20,
+                            ),
+                            SizedBox(
+                              height: 20.h,
+                            ),
+                            Form(
+                              key: keyForm,
+                              child: CustomTextFormField(
+                                  hintText: 'Enter money amount',
+                                  prefix: const Icon(Icons.money,
+                                      color: Color(0xffC19843)),
+                                  textInputType: TextInputType.number,
+                                  controller: verifyController,
+                                  validator: (value) {
+                                    if (value!.isEmpty) {
+                                      return ' amount Is Required';
+                                    } else {
+                                      return null;
                                     }
                                   }),
-                            ],
-                          ),
-                          SizedBox(
-                            height: 50.h,
-                          ),
-                        ],
-                      ),
-                    ],
+                            ),
+                             SizedBox(
+                              height: 50.h,
+                            ),
+                            Button(
+                                textButton: 'NFC card',
+                                funcation: () {
+                                  if (keyForm.currentState!.validate()) {
+                                    BlocProvider.of<NfcCubit>(context)
+                                        .goToNfc();
+                                    print('gamallllDone');
+                                    navigato(
+                                        context,
+                                        NfcScreen(
+                                          amount: verifyController.text,
+                                        ));
+                                  }
+                                }),
+                            const SizedBox(
+                              height: 10.0,
+                            ),
+                            ButtonSide(
+                                textButton: 'QR code',
+                                funcation: () {
+                                  if (keyForm.currentState!.validate()) {
+                                    navigato(
+                                        context,
+                                        QrScreen(
+                                          amount: verifyController.text,
+                                        ));
+                                  }
+                                }),
+                            SizedBox(
+                              height: 50.h,
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),

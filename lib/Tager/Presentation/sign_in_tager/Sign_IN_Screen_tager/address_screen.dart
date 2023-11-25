@@ -68,18 +68,7 @@ class _AddressScreenState extends State<AddressScreen> {
     return BlocProvider(
       create: (_) => LoginViewCubit(),
       child: BlocConsumer<LoginViewCubit, LoginViewState>(
-        listener: (context, state) {
-          if (state is SendAddressSuccessfully) {
-            Fluttertoast.showToast(
-                msg: state.message,
-                toastLength: Toast.LENGTH_SHORT,
-                gravity: ToastGravity.CENTER,
-                timeInSecForIosWeb: 1,
-                backgroundColor: Colors.blue,
-                textColor: Colors.white,
-                fontSize: 16.0);
-          }
-        },
+        listener: (context, state) {},
         builder: (context, state) {
           return Scaffold(
               resizeToAvoidBottomInset: false,
@@ -123,7 +112,7 @@ class _AddressScreenState extends State<AddressScreen> {
                                   ),
                                   SizedBox(height: 10.h),
                                   CustomTextFormField(
-                                      hintText: 'EGYPT',
+                                      hintText: 'turkey',
                                       prefix: const Icon(
                                           Icons.location_city_rounded,
                                           color: Color(0xffC19843)),
@@ -143,7 +132,7 @@ class _AddressScreenState extends State<AddressScreen> {
                                   ),
                                   SizedBox(height: 10.h),
                                   CustomTextFormField(
-                                      hintText: 'Egypt / cairo / moham**',
+                                      hintText: 'turkey / istanbul / moham**',
                                       prefix: const Icon(Icons.location_history,
                                           color: Color(0xffC19843)),
                                       textInputType: TextInputType.emailAddress,
@@ -168,31 +157,15 @@ class _AddressScreenState extends State<AddressScreen> {
                                             getCurrentLocation();
                                             if (keyForm.currentState!
                                                 .validate()) {
-                                              if (lat != null) {
-                                                BlocProvider.of<LoginViewCubit>(
-                                                        context)
-                                                    .SendAddress(
-                                                  lat: lat,
-                                                  long: long,
-                                                  country:
-                                                      countryController.text,
-                                                  address:
-                                                      addressController.text,
-                                                  context: context,
-                                                );
-                                              } else {
-                                                Fluttertoast.showToast(
-                                                    msg:
-                                                        "Please Allow Access to Location",
-                                                    toastLength:
-                                                        Toast.LENGTH_SHORT,
-                                                    gravity:
-                                                        ToastGravity.CENTER,
-                                                    timeInSecForIosWeb: 1,
-                                                    backgroundColor: Colors.red,
-                                                    textColor: Colors.white,
-                                                    fontSize: 16.0);
-                                              }
+                                              BlocProvider.of<LoginViewCubit>(
+                                                      context)
+                                                  .SendAddress(
+                                                lat: "37.6847351",
+                                                long: "53.1521125",
+                                                country: countryController.text,
+                                                address: addressController.text,
+                                                context: context,
+                                              );
                                             }
                                           },
                                         ),

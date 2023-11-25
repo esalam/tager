@@ -14,6 +14,7 @@ import 'Tager/core/const/dioHelper.dart';
 import 'Tager/core/const/memoryy.dart';
 import 'app_cubit.dart';
 import 'firebase_options.dart';
+
 @pragma('vm:entry-point')
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   print("Handling a background message: ${message.messageId}");
@@ -26,10 +27,26 @@ Future<void> main() async {
   await CacheHelper.init();
   await DioHelper.init();
 
-  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform,);
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   FirebaseMessaging messaging = FirebaseMessaging.instance;
-  NotificationSettings settings = await messaging.requestPermission(alert: true, announcement: false, badge: true, carPlay: false, criticalAlert: false, provisional: false, sound: true,);
-  messaging.getToken().then((token){print("token is $token");fcm=token;});
+  NotificationSettings settings = await messaging.requestPermission(
+    alert: true,
+    announcement: false,
+    badge: true,
+    carPlay: false,
+    criticalAlert: false,
+    provisional: false,
+    sound: true,
+  );
+  messaging.getToken().then(
+    (token) {
+      CacheHelper.saveDataSharedPreference(key: "fcm", value: token);
+      print("token is $token");
+      fcm = token;
+    },
+  );
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
   FirebaseMessaging.onMessage.listen((RemoteMessage message) {
     print('Got a message whilst in the foreground!');
@@ -62,5 +79,3 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-
-

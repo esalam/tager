@@ -68,8 +68,8 @@ class LastTransaction extends StatelessWidget {
                       child: Stack(
                         children: [
                           const MyAnimatedBackground(
-                            path1: "assets/images/img_inner_60_146x149.png",
-                            path2: "assets/images/img_inner_60_155x156.png"),
+                              path1: "assets/images/img_inner_60_146x149.png",
+                              path2: "assets/images/img_inner_60_155x156.png"),
                           Column(
                             children: [
                               customHeadScreen(),
@@ -78,11 +78,12 @@ class LastTransaction extends StatelessWidget {
                                   Container(
                                       decoration: BoxDecoration(
                                           color: const Color(0xffBF953F),
-                                          borderRadius: BorderRadius.circular(5)),
-                                      child: Padding(
+                                          borderRadius:
+                                              BorderRadius.circular(5)),
+                                      child: const Padding(
                                         padding: const EdgeInsets.all(4.0),
-                                        child:
-                                            Icon(Icons.alarm, color: Colors.black),
+                                        child: Icon(Icons.alarm,
+                                            color: Colors.black),
                                       )),
                                   const SizedBox(width: 10),
                                   Text(
@@ -118,7 +119,8 @@ class LastTransaction extends StatelessWidget {
                                                 '${BlocProvider.of<LastTransactionCubit>(context).TransactionDataAll[index].amount}TL',
                                                 style: Styles.textStyleTitle14
                                                     .copyWith(
-                                                        color: Color(0xffBF953F)),
+                                                        color:
+                                                            Color(0xffBF953F)),
                                               ),
                                             ],
                                           ),
@@ -152,7 +154,8 @@ class LastTransaction extends StatelessWidget {
                                               ),
                                               Text(
                                                   'Received by : ${BlocProvider.of<LastTransactionCubit>(context).TransactionDataAll[index].soldToLastName} ',
-                                                  style: Styles.textStyleTitle12),
+                                                  style:
+                                                      Styles.textStyleTitle12),
                                             ],
                                           ),
                                           Divider(
@@ -160,11 +163,10 @@ class LastTransaction extends StatelessWidget {
                                             thickness: 2.5,
                                           )
                                         ]),
-                                        itemCount:
-                                            BlocProvider.of<LastTransactionCubit>(
-                                                    context)
-                                                .TransactionDataAll
-                                                .length,
+                                        itemCount: BlocProvider.of<
+                                                LastTransactionCubit>(context)
+                                            .TransactionDataAll
+                                            .length,
                                       );
                                     },
                                     fallback: (context) => Center(

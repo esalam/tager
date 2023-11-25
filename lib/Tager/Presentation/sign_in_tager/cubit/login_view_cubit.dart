@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:tager/Tager/Presentation/sign_in_tager/Sign_IN_Screen_tager/address_screen.dart';
+import 'package:tager/Tager/core/const/chacheHelper.dart';
 import 'package:tager/Tager/core/const/consts.dart';
+import 'package:tager/http_helper.dart';
 
 import '../../../core/Navigation/navigation.dart';
 import '../../../core/const/dioHelper.dart';
@@ -21,35 +23,54 @@ class LoginViewCubit extends Cubit<LoginViewState> {
     emit(ChangeIconPasswordSuccess());
   }
 
-  UserLoginModel? userLoginModel;
-  void userLogin({required String email, required String password, context}) {
-    emit(LoginViewStateLoading());
-    DioHelper.postData(url: 'trader_login', data: {
-      'email': email,
-      'password': password,
-      'device_token': fcm,
-    }).then((value) {
-      print(value.data);
-      userLoginModel = UserLoginModel.fromJson(value.data);
-
-      uId = userLoginModel!.token;
-      name =
-          "${userLoginModel!.user!.firstName!} ${userLoginModel!.user!.firstName!}";
-      navigatofinsh(context, AddressScreen(), false);
+  void userLogin(
+      {required String email, required String password, context}) async {
+    try {
+      emit(LoginViewStateLoading());
+      var fcmToken = CacheHelper.getDataFromSharedPreference(key: "fcm");
+      print(fcmToken);
+      var response = await HttpHelper.postData(
+        endpoint: "trader_login",
+        body: {
+          'email': email,
+          'password': password,
+          'device_token': fcmToken,
+        },
+      );
+      print(response);
+      if (response['status'] == true) {
+        uId=response['token'];
+        Fluttertoast.showToast(
+            msg: response['message'],
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.BOTTOM,
+            timeInSecForIosWeb: 1,
+            backgroundColor: Colors.blue,
+            textColor: Colors.white,
+            fontSize: 16.0);
+        navigatofinsh(context, AddressScreen(), false);
+      } else {
+        Fluttertoast.showToast(
+            msg: response['message'],
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.BOTTOM,
+            timeInSecForIosWeb: 1,
+            backgroundColor: Colors.red,
+            textColor: Colors.white,
+            fontSize: 16.0);
+      }
+      emit(LoginViewStateSuccess(message: "sfd"));
+    } catch (error) {
       Fluttertoast.showToast(
-          msg: '${userLoginModel!.message}',
+          msg: "Please Try Again",
           toastLength: Toast.LENGTH_SHORT,
           gravity: ToastGravity.BOTTOM,
           timeInSecForIosWeb: 1,
-          backgroundColor: Colors.green,
+          backgroundColor: Colors.red,
           textColor: Colors.white,
           fontSize: 16.0);
-      emit(LoginViewStateSuccess(userLoginModel!));
-    }).catchError((error) {
-      emit(LoginViewStateError(error.toString()));
-      print('ffffffffffffff');
-      print(error.toString());
-    });
+    }
+    emit(LoginViewStateError("sdfsd"));
   }
 
   void SendAddress({
@@ -58,20 +79,42 @@ class LoginViewCubit extends Cubit<LoginViewState> {
     required String country,
     required String address,
     required BuildContext context,
-  }) {
+  }) async {
     emit(SendAddressLoading());
-    DioHelper.postData(url: "add_location", data: {
-      'lat': lat,
-      'long': long,
-      'place': country,
-      'address': address,
-    }).then((value) {
-      emit(SendAddressSuccessfully(message: value.data['message']));
-       navigatofinsh(context, HomeScreen(), false);
-      print(value.data['message']);
-    }).catchError((error) {
-      emit(SendAddressError(error: error));
+    try {
+      var response = await HttpHelper.postData(
+        endpoint: "add_location",
+        body: {
+          'lat': lat,
+          'long': long,
+          'place': country,
+          'address': address,
+        },
+      );
+      if (response['status'] == true) {
+        Fluttertoast.showToast(
+            msg: response['message'],
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.BOTTOM,
+            timeInSecForIosWeb: 1,
+            backgroundColor: Colors.blue,
+            textColor: Colors.white,
+            fontSize: 16.0);
+            navigatofinsh(context, HomeScreen(), false);
+      } else {
+        Fluttertoast.showToast(
+            msg: response['message'],
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.BOTTOM,
+            timeInSecForIosWeb: 1,
+            backgroundColor: Colors.red,
+            textColor: Colors.white,
+            fontSize: 16.0);
+      }
+      emit(SendAddressSuccessfully());
+    } catch (error) {
+      emit(SendAddressError());
       print(error);
-    });
+    }
   }
 }

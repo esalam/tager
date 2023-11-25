@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:simple_gradient_text/simple_gradient_text.dart';
 import 'package:tager/Tager/Presentation/animation_bg.dart';
+import 'package:tager/Tager/Presentation/sign_in_tager/Sign_IN_Screen_tager/sign_in_screen_tager.dart';
 import 'package:tager/Tager/Presentation/widgets/custom_head_screen.dart';
 
 import '../../../../core/Navigation/navigation.dart';
@@ -49,7 +50,7 @@ class HomeScreen extends StatelessWidget {
                                   .userDataModel!
                                   .countNotifications
                                   .toString(),
-                              style: TextStyle(
+                              style:const TextStyle(
                                 color: Colors.white,
                               ),
                             ),
@@ -66,8 +67,7 @@ class HomeScreen extends StatelessWidget {
                   side: BorderSide(color: Color(0xffEEBB49), width: 1),
                   borderRadius: BorderRadius.circular(10),
                 ),
-                child: ListView(
-                  padding: EdgeInsets.zero,
+                child: Column(
                   children: [
                     SizedBox(
                       height: 40.h,
@@ -144,6 +144,32 @@ class HomeScreen extends StatelessWidget {
                         navigato(context, ProfileScreen());
                       },
                     ),
+                    Spacer(),
+                    ListTile(
+                      title: Row(
+                        children: [
+                          Container(
+                            decoration: BoxDecoration(
+                              color: Color(0xffEEBB49),
+                              borderRadius: BorderRadius.circular(5),
+                            ),
+                            child: Icon(Icons.logout,
+                                color: Colors.black, size: 30),
+                          ),
+                          SizedBox(
+                            width: 10.0,
+                          ),
+                          Text(
+                            'LogOut',
+                            style: Styles.textStyleTitle20,
+                          ),
+                        ],
+                      ),
+                      onTap: () {
+                        navigatofinsh(context, SignINScreenTager(), false);
+                      },
+                    ),
+                    SizedBox(height: 30.h),
                   ],
                 ),
               ),

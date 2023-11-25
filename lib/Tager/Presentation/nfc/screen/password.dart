@@ -58,6 +58,7 @@ class PasswordScreen extends StatelessWidget {
                 ),
               ),
               body: Container(
+                height: double.infinity,
                 decoration: const BoxDecoration(
                   gradient: LinearGradient(
                       colors: [

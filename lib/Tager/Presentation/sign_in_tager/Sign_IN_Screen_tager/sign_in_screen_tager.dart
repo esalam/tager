@@ -35,10 +35,28 @@ class SignINScreenTager extends StatelessWidget {
         child: BlocConsumer<LoginViewCubit, LoginViewState>(
           listener: (context, state) {
             if (state is LoginViewStateSuccess) {
-              if (state.userLoginModel.status == true) {
-              } else {
+              // if (state.userLoginModel.status == true) {
+              //   Fluttertoast.showToast(
+              //       msg: '${state.userLoginModel.message}',
+              //       toastLength: Toast.LENGTH_SHORT,
+              //       gravity: ToastGravity.BOTTOM,
+              //       timeInSecForIosWeb: 1,
+              //       backgroundColor: Colors.blue,
+              //       textColor: Colors.white,
+              //       fontSize: 16.0);
+              // } else {
+              //   Fluttertoast.showToast(
+              //       msg: '${state.userLoginModel.message}',
+              //       toastLength: Toast.LENGTH_SHORT,
+              //       gravity: ToastGravity.BOTTOM,
+              //       timeInSecForIosWeb: 1,
+              //       backgroundColor: Colors.red,
+              //       textColor: Colors.white,
+              //       fontSize: 16.0);
+              // }
+              if (state is LoginViewStateError) {
                 Fluttertoast.showToast(
-                    msg: '${state.userLoginModel.message}',
+                    msg: 'Please Try Again',
                     toastLength: Toast.LENGTH_SHORT,
                     gravity: ToastGravity.BOTTOM,
                     timeInSecForIosWeb: 1,
@@ -49,7 +67,6 @@ class SignINScreenTager extends StatelessWidget {
             }
           },
           builder: (context, state) {
-            
             return Scaffold(
                 resizeToAvoidBottomInset: false,
                 body: SafeArea(
