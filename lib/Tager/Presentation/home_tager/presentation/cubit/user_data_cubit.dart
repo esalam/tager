@@ -13,7 +13,7 @@ import '../model/user_data_model.dart';
 class userDataCubit extends Cubit<UserDataState> {
   userDataCubit() : super(InitializeUserDataState());
   UserData? userDataModel;
-  void getUserData() {
+  Future<void> getUserData() async{
     emit(UserDataLoadingState());
     DioHelper.getData(url: 'trader').then((value) {
       userDataModel = UserData.fromJson(value.data);

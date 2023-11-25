@@ -71,112 +71,108 @@ class _AddressScreenState extends State<AddressScreen> {
         listener: (context, state) {},
         builder: (context, state) {
           return Scaffold(
-              resizeToAvoidBottomInset: false,
               body: SafeArea(
-                child: Animate(
-                  effects: const [FadeEffect(), ScaleEffect()],
-                  child: Stack(
-                    children: [
-                      const MyAnimatedBackground(
-                          path1: "assets/images/img_inner_60_146x149.png",
-                          path2: "assets/images/img_inner_60_155x156.png"),
-                      Container(
-                        width: double.infinity,
-                        height: double.infinity,
-                        decoration: const BoxDecoration(
-                          image: DecorationImage(
-                            image: AssetImage(
-                                'assets/images/img_constraction.png'),
-                            fit: BoxFit.cover,
-                          ),
+                child: Stack(
+                  children: [
+                    const MyAnimatedBackground(
+                        path1: "assets/images/img_inner_60_146x149.png",
+                        path2: "assets/images/img_inner_60_155x156.png"),
+                    Container(
+                      width: double.infinity,
+                      height: double.infinity,
+                      decoration: const BoxDecoration(
+                        image: DecorationImage(
+                          image: AssetImage(
+                              'assets/images/img_constraction.png'),
+                          fit: BoxFit.cover,
                         ),
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 15.0),
-                          child: Form(
-                            key: keyForm,
-                            child: SingleChildScrollView(
-                              physics: const BouncingScrollPhysics(),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  customHeadScreen(),
-                                  Container(
-                                    alignment: Alignment.center,
-                                    height: 100.h,
-                                    child: Lottie.asset(
-                                        'assets/images/address.json'),
-                                  ),
-                                  Text(
-                                    'Country',
-                                    style: Styles.textStyleTitle14,
-                                  ),
-                                  SizedBox(height: 10.h),
-                                  CustomTextFormField(
-                                      hintText: 'turkey',
-                                      prefix: const Icon(
-                                          Icons.location_city_rounded,
-                                          color: Color(0xffC19843)),
-                                      textInputType: TextInputType.text,
-                                      controller: countryController,
-                                      validator: (value) {
-                                        if (value!.isEmpty) {
-                                          return 'country is  empty';
-                                        } else {
-                                          return null;
-                                        }
-                                      }),
-                                  SizedBox(height: 15.h),
-                                  Text(
-                                    'Address',
-                                    style: Styles.textStyleTitle14,
-                                  ),
-                                  SizedBox(height: 10.h),
-                                  CustomTextFormField(
-                                      hintText: 'turkey / istanbul / moham**',
-                                      prefix: const Icon(Icons.location_history,
-                                          color: Color(0xffC19843)),
-                                      textInputType: TextInputType.emailAddress,
-                                      controller: addressController,
-                                      validator: (value) {
-                                        if (value!.isEmpty) {
-                                          return 'Address is  empty';
-                                        } else {
-                                          return null;
-                                        }
-                                      }),
-                                  const SizedBox(height: 50),
-                                  state is SendAddressLoading
-                                      ? const Center(
-                                          child: CircularProgressIndicator(
-                                            color: Color(0xffEEBB49),
-                                          ),
-                                        )
-                                      : Button(
-                                          textButton: 'Send Address',
-                                          funcation: () {
-                                            getCurrentLocation();
-                                            if (keyForm.currentState!
-                                                .validate()) {
-                                              BlocProvider.of<LoginViewCubit>(
-                                                      context)
-                                                  .SendAddress(
-                                                lat: "37.6847351",
-                                                long: "53.1521125",
-                                                country: countryController.text,
-                                                address: addressController.text,
-                                                context: context,
-                                              );
-                                            }
-                                          },
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                        child: Form(
+                          key: keyForm,
+                          child: SingleChildScrollView(
+                            physics: const BouncingScrollPhysics(),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                customHeadScreen(),
+                                Container(
+                                  alignment: Alignment.center,
+                                  height: 100.h,
+                                  child: Lottie.asset(
+                                      'assets/images/address.json'),
+                                ),
+                                Text(
+                                  'Country',
+                                  style: Styles.textStyleTitle14,
+                                ),
+                                SizedBox(height: 10.h),
+                                CustomTextFormField(
+                                    hintText: 'turkey',
+                                    prefix: const Icon(
+                                        Icons.location_city_rounded,
+                                        color: Color(0xffC19843)),
+                                    textInputType: TextInputType.text,
+                                    controller: countryController,
+                                    validator: (value) {
+                                      if (value!.isEmpty) {
+                                        return 'country is  empty';
+                                      } else {
+                                        return null;
+                                      }
+                                    }),
+                                SizedBox(height: 15.h),
+                                Text(
+                                  'Address',
+                                  style: Styles.textStyleTitle14,
+                                ),
+                                SizedBox(height: 10.h),
+                                CustomTextFormField(
+                                    hintText: 'turkey / istanbul / moham**',
+                                    prefix: const Icon(Icons.location_history,
+                                        color: Color(0xffC19843)),
+                                    textInputType: TextInputType.emailAddress,
+                                    controller: addressController,
+                                    validator: (value) {
+                                      if (value!.isEmpty) {
+                                        return 'Address is  empty';
+                                      } else {
+                                        return null;
+                                      }
+                                    }),
+                                const SizedBox(height: 50),
+                                state is SendAddressLoading
+                                    ? const Center(
+                                        child: CircularProgressIndicator(
+                                          color: Color(0xffEEBB49),
                                         ),
-                                ],
-                              ),
+                                      )
+                                    : Button(
+                                        textButton: 'Send Address',
+                                        funcation: () {
+                                          getCurrentLocation();
+                                          if (keyForm.currentState!
+                                              .validate()) {
+                                            BlocProvider.of<LoginViewCubit>(
+                                                    context)
+                                                .SendAddress(
+                                              lat: "37.6847351",
+                                              long: "53.1521125",
+                                              country: countryController.text,
+                                              address: addressController.text,
+                                              context: context,
+                                            );
+                                          }
+                                        },
+                                      ),
+                              ],
                             ),
                           ),
                         ),
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               ));
         },

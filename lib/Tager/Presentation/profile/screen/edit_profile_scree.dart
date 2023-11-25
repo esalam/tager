@@ -74,25 +74,27 @@ class EditProfileScreen extends StatelessWidget {
                               size: 150.h,
                               color: Color(0xffBF953F),
                             ),
-                            GestureDetector(
-                              onTap: () {
-                                navigato(context, UpdateProfileScreen());
-                              },
-                              child: Container(
-                                padding: EdgeInsets.symmetric(
-                                    vertical: 10.h, horizontal: 25.h),
-                                margin: EdgeInsets.all(10.h),
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(10.h),
-                                    border: Border.all(
-                                      color: const Color(0xffEEBB49),
-                                    )),
-                                child: Text(
-                                  "Edit Profile",
-                                  style: Styles.textStyleTitle16,
-                                ),
-                              ),
-                            ),
+                            // GestureDetector(
+                            //   onTap: () {
+                            //     navigato(context, UpdateProfileScreen());
+                            //   },
+                            //   child: Container(
+                            //     padding: EdgeInsets.symmetric(
+                            //         vertical: 10.h, horizontal: 25.h),
+                            //     margin: EdgeInsets.all(10.h),
+                            //     decoration: BoxDecoration(
+                            //         borderRadius: BorderRadius.circular(10.h),
+                            //         border: Border.all(
+                            //           color: const Color(0xffEEBB49),
+                            //         )),
+                            //     child: Text(
+                            //       "Edit Profile",
+                            //       style: Styles.textStyleTitle16,
+                            //     ),
+                            //   ),
+                            // ),
+                            
+                            
                             Container(
                               margin: EdgeInsets.all(10.h),
                               padding: EdgeInsets.all(10.h),

@@ -68,139 +68,135 @@ class SignINScreenTager extends StatelessWidget {
           },
           builder: (context, state) {
             return Scaffold(
-                resizeToAvoidBottomInset: false,
                 body: SafeArea(
-                  child: Animate(
-                    effects: const [FadeEffect(), ScaleEffect()],
-                    child: Stack(
-                      children: [
-                        const MyAnimatedBackground(
-                            path1: "assets/images/img_inner_60_146x149.png",
-                            path2: "assets/images/img_inner_60_155x156.png"),
-                        Container(
-                          decoration: const BoxDecoration(
-                            image: DecorationImage(
-                              image: AssetImage(
-                                  'assets/images/img_constraction.png'),
-                              fit: BoxFit.cover,
-                            ),
+                  child: Stack(
+                    children: [
+                      const MyAnimatedBackground(
+                          path1: "assets/images/img_inner_60_146x149.png",
+                          path2: "assets/images/img_inner_60_155x156.png"),
+                      Container(
+                        decoration: const BoxDecoration(
+                          image: DecorationImage(
+                            image: AssetImage(
+                                'assets/images/img_constraction.png'),
+                            fit: BoxFit.cover,
                           ),
-                          child: Padding(
-                            padding:
-                                const EdgeInsets.symmetric(horizontal: 15.0),
-                            child: Form(
-                              key: keyForm,
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  customHeadScreen(),
-                                  Text(
-                                    'Email',
-                                    style: Styles.textStyleTitle14,
-                                  ),
-                                  SizedBox(height: 10.h),
-                                  CustomTextFormField(
-                                      hintText: 'ali@gmail.com',
-                                      prefix: const Icon(Icons.email,
-                                          color: Color(0xffC19843)),
-                                      textInputType: TextInputType.emailAddress,
-                                      controller: emailController,
-                                      validator: (value) {
-                                        if (value!.isEmpty) {
-                                          return 'email is  empty';
-                                        } else {
-                                          return null;
-                                        }
-                                      }),
-                                  SizedBox(height: 15.h),
-                                  Text(
-                                    'password',
-                                    style: Styles.textStyleTitle14,
-                                  ),
-                                  SizedBox(height: 10.h),
-                                  TextFormField(
+                        ),
+                        child: Padding(
+                          padding:
+                              const EdgeInsets.symmetric(horizontal: 15.0),
+                          child: Form(
+                            key: keyForm,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                customHeadScreen(),
+                                Text(
+                                  'Email',
+                                  style: Styles.textStyleTitle14,
+                                ),
+                                SizedBox(height: 10.h),
+                                CustomTextFormField(
+                                    hintText: 'ali@gmail.com',
+                                    prefix: const Icon(Icons.email,
+                                        color: Color(0xffC19843)),
+                                    textInputType: TextInputType.emailAddress,
+                                    controller: emailController,
                                     validator: (value) {
                                       if (value!.isEmpty) {
-                                        return 'Password is to short';
+                                        return 'email is  empty';
                                       } else {
                                         return null;
                                       }
-                                    },
-                                    keyboardType: TextInputType.emailAddress,
-                                    controller: passwordController,
-                                    decoration: InputDecoration(
-                                      hintText: "********",
-                                      focusColor: const Color(0Xff2056AE),
-                                      border: OutlineInputBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(12.0),
-                                      ),
-                                      focusedBorder: OutlineInputBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(12.0),
-                                        borderSide: const BorderSide(
-                                          color: Color(0xffEEBB49),
-                                          width: 2.0,
-                                        ),
-                                      ),
-                                      enabledBorder: OutlineInputBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(12.0),
-                                        borderSide: const BorderSide(
-                                          color: Color(0xffC19843),
-                                          width: 2.0,
-                                        ),
-                                      ),
-                                      suffixIcon: IconButton(
-                                        onPressed: () {
-                                          BlocProvider.of<LoginViewCubit>(
-                                                  context)
-                                              .changIconPassword();
-                                        },
-                                        icon: Icon(
-                                            BlocProvider.of<LoginViewCubit>(
-                                                    context)
-                                                .subfix,
-                                            color: const Color(0xffEEBB49),
-                                            size: 30.0),
-                                      ),
-                                      prefixIcon: const Icon(Icons.lock_outline,
-                                          color: Color(0xffEEBB49), size: 30.0),
+                                    }),
+                                SizedBox(height: 15.h),
+                                Text(
+                                  'password',
+                                  style: Styles.textStyleTitle14,
+                                ),
+                                SizedBox(height: 10.h),
+                                TextFormField(
+                                  validator: (value) {
+                                    if (value!.isEmpty) {
+                                      return 'Password is to short';
+                                    } else {
+                                      return null;
+                                    }
+                                  },
+                                  keyboardType: TextInputType.emailAddress,
+                                  controller: passwordController,
+                                  decoration: InputDecoration(
+                                    hintText: "********",
+                                    focusColor: const Color(0Xff2056AE),
+                                    border: OutlineInputBorder(
+                                      borderRadius:
+                                          BorderRadius.circular(12.0),
                                     ),
-                                    obscureText:
-                                        BlocProvider.of<LoginViewCubit>(context)
-                                            .isPassword,
-                                  ),
-                                  const SizedBox(height: 50),
-                                  ConditionalBuilder(
-                                    condition:
-                                        (state is! LoginViewStateLoading),
-                                    builder: (context) => Button(
-                                      textButton: 'Sign In',
-                                      funcation: () {
-                                        if (keyForm.currentState!.validate()) {
-                                          BlocProvider.of<LoginViewCubit>(
-                                                  context)
-                                              .userLogin(
-                                                  email: emailController.text,
-                                                  password:
-                                                      passwordController.text,
-                                                  context: context);
-                                        }
+                                    focusedBorder: OutlineInputBorder(
+                                      borderRadius:
+                                          BorderRadius.circular(12.0),
+                                      borderSide: const BorderSide(
+                                        color: Color(0xffEEBB49),
+                                        width: 2.0,
+                                      ),
+                                    ),
+                                    enabledBorder: OutlineInputBorder(
+                                      borderRadius:
+                                          BorderRadius.circular(12.0),
+                                      borderSide: const BorderSide(
+                                        color: Color(0xffC19843),
+                                        width: 2.0,
+                                      ),
+                                    ),
+                                    suffixIcon: IconButton(
+                                      onPressed: () {
+                                        BlocProvider.of<LoginViewCubit>(
+                                                context)
+                                            .changIconPassword();
                                       },
+                                      icon: Icon(
+                                          BlocProvider.of<LoginViewCubit>(
+                                                  context)
+                                              .subfix,
+                                          color: const Color(0xffEEBB49),
+                                          size: 30.0),
                                     ),
-                                    fallback: (context) => const Center(
-                                        child: CircularProgressIndicator(
-                                      color: Color(0xffEEBB49),
-                                    )),
-                                  )
-                                ],
-                              ),
+                                    prefixIcon: const Icon(Icons.lock_outline,
+                                        color: Color(0xffEEBB49), size: 30.0),
+                                  ),
+                                  obscureText:
+                                      BlocProvider.of<LoginViewCubit>(context)
+                                          .isPassword,
+                                ),
+                                const SizedBox(height: 50),
+                                ConditionalBuilder(
+                                  condition:
+                                      (state is! LoginViewStateLoading),
+                                  builder: (context) => Button(
+                                    textButton: 'Sign In',
+                                    funcation: () {
+                                      if (keyForm.currentState!.validate()) {
+                                        BlocProvider.of<LoginViewCubit>(
+                                                context)
+                                            .userLogin(
+                                                email: emailController.text,
+                                                password:
+                                                    passwordController.text,
+                                                context: context);
+                                      }
+                                    },
+                                  ),
+                                  fallback: (context) => const Center(
+                                      child: CircularProgressIndicator(
+                                    color: Color(0xffEEBB49),
+                                  )),
+                                )
+                              ],
                             ),
                           ),
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
                 ));
           },

@@ -39,6 +39,7 @@ class LoginViewCubit extends Cubit<LoginViewState> {
       );
       print(response);
       if (response['status'] == true) {
+         navigato(context, AddressScreen());
         uId=response['token'];
         Fluttertoast.showToast(
             msg: response['message'],
@@ -48,7 +49,7 @@ class LoginViewCubit extends Cubit<LoginViewState> {
             backgroundColor: Colors.blue,
             textColor: Colors.white,
             fontSize: 16.0);
-        navigatofinsh(context, AddressScreen(), false);
+      
       } else {
         Fluttertoast.showToast(
             msg: response['message'],

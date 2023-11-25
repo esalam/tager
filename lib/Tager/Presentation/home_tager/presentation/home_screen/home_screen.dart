@@ -5,6 +5,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:simple_gradient_text/simple_gradient_text.dart';
 import 'package:tager/Tager/Presentation/animation_bg.dart';
+import 'package:tager/Tager/Presentation/home_tager/presentation/home_screen/pay_with_qrcode.dart';
+import 'package:tager/Tager/Presentation/profile/screen/edit_profile_scree.dart';
 import 'package:tager/Tager/Presentation/sign_in_tager/Sign_IN_Screen_tager/sign_in_screen_tager.dart';
 import 'package:tager/Tager/Presentation/widgets/custom_head_screen.dart';
 
@@ -41,8 +43,8 @@ class HomeScreen extends StatelessWidget {
                   ],
                 ),
                 actions: [
-                  BlocProvider.of<userDataCubit>(context).userDataModel !=
-                        null?  Padding(
+                  BlocProvider.of<userDataCubit>(context).userDataModel != null
+                      ? Padding(
                           padding: EdgeInsets.all(10.h),
                           child: Badge(
                             label: Text(
@@ -50,13 +52,14 @@ class HomeScreen extends StatelessWidget {
                                   .userDataModel!
                                   .countNotifications
                                   .toString(),
-                              style:const TextStyle(
+                              style: const TextStyle(
                                 color: Colors.white,
                               ),
                             ),
                             child: Icon(Icons.notifications),
                           ),
-                        ):SizedBox.shrink(),
+                        )
+                      : SizedBox.shrink(),
                 ],
               ),
               drawer: Drawer(
@@ -141,7 +144,7 @@ class HomeScreen extends StatelessWidget {
                         ],
                       ),
                       onTap: () {
-                        navigato(context, ProfileScreen());
+                        navigato(context, EditProfileScreen());
                       },
                     ),
                     Spacer(),
@@ -173,208 +176,176 @@ class HomeScreen extends StatelessWidget {
                   ],
                 ),
               ),
-              body: ConditionalBuilder(
-                condition:
-                    BlocProvider.of<userDataCubit>(context).userDataModel !=
-                        null,
-                builder: (context) => Container(
-                  decoration: const BoxDecoration(
-                    gradient: LinearGradient(
-                        colors: [
-                          Color(0xffBF953F),
-                          Colors.black,
-                          Colors.black,
-                          Colors.black
-                        ],
-                        begin: AlignmentDirectional.topStart,
-                        end: AlignmentDirectional.centerStart),
-                    image: DecorationImage(
-                      image: AssetImage('assets/images/img_constraction.png'),
-                      fit: BoxFit.cover,
+              body: RefreshIndicator(
+                onRefresh: ()=>BlocProvider.of<userDataCubit>(context).getUserData(),
+                child: ConditionalBuilder(
+                  condition:
+                      BlocProvider.of<userDataCubit>(context).userDataModel !=
+                          null,
+                  builder: (context) => Container(
+                    height: double.infinity,
+                    decoration: const BoxDecoration(
+                      gradient: LinearGradient(
+                          colors: [
+                            Color(0xffBF953F),
+                            Colors.black,
+                            Colors.black,
+                            Colors.black
+                          ],
+                          begin: AlignmentDirectional.topStart,
+                          end: AlignmentDirectional.centerStart),
+                      image: DecorationImage(
+                        image: AssetImage('assets/images/img_constraction.png'),
+                        fit: BoxFit.cover,
+                      ),
                     ),
-                  ),
-                  child: SingleChildScrollView(
-                    physics: const BouncingScrollPhysics(),
-                    child: Stack(
-                      children: [
-                        const MyAnimatedBackground(
-                            path1: "assets/images/img_inner_60_146x149.png",
-                            path2: "assets/images/img_inner_60_155x156.png"),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Column(
-                              children: [
-                                customHeadScreen(),
-                                const SizedBox(
-                                  height: 10.0,
-                                )
-                              ],
-                            ),
-                            Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 10.0),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
+                    child: SingleChildScrollView(
+                      physics: const BouncingScrollPhysics(),
+                      child: Stack(
+                        children: [
+                          const MyAnimatedBackground(
+                              path1: "assets/images/img_inner_60_146x149.png",
+                              path2: "assets/images/img_inner_60_155x156.png"),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Column(
                                 children: [
-                                  Text(
-                                    'Your information',
-                                    style: Styles.textStyleTitle16
-                                        .copyWith(color: Colors.white),
-                                  ),
-                                  SizedBox(
-                                    height: 10.h,
-                                  ),
-                                  Container(
-                                    decoration: BoxDecoration(
-                                      color: Color(0xfffcf6ba).withOpacity(0.4),
-                                      borderRadius: BorderRadius.circular(8),
-                                    ),
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(20.0),
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Text(
-                                            'Name :- ${BlocProvider.of<userDataCubit>(context).userDataModel!.trader!.firstName} ${BlocProvider.of<userDataCubit>(context).userDataModel!.trader!.lastName}',
-                                            style: Styles.textStyleTitle20
-                                                .copyWith(color: Colors.black),
-                                          ),
-                                          Divider(
-                                            thickness: 2,
-                                            color: Colors.black,
-                                            endIndent: 10,
-                                            indent: 5,
-                                          ),
-                                          Text(
-                                            'ID number  : ${BlocProvider.of<userDataCubit>(context).userDataModel!.trader!.iD}  ',
-                                            style: Styles.textStyleTitle20
-                                                .copyWith(color: Colors.black),
-                                          ),
-                                          Divider(
-                                            thickness: 2,
-                                            color: Colors.black,
-                                            endIndent: 5,
-                                            indent: 5,
-                                          ),
-                                          Text(
-                                            'Phone number  : ${BlocProvider.of<userDataCubit>(context).userDataModel!.trader!.phone} ',
-                                            style: Styles.textStyleTitle20
-                                                .copyWith(color: Colors.black),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
+                                  customHeadScreen(),
+                                  const SizedBox(
+                                    height: 10.0,
                                   )
                                 ],
                               ),
-                            ),
-                            SizedBox(
-                              height: 20.h,
-                            ),
-                            Container(
-                              color: Color.fromRGBO(179, 169, 169, 0.6),
-                              child: Padding(
-                                padding: const EdgeInsets.all(20.0),
-                                child: Column(
+                              Container(
+                                color: Color.fromRGBO(179, 169, 169, 0.6),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(20.0),
+                                  child: Column(
+                                    children: [
+                                      Row(
+                                        children: [
+                                          Text(
+                                            'Name',
+                                            style: Styles.textStyleTitle16,
+                                          ),
+                                          SizedBox(
+                                            width: 20,
+                                          ),
+                                          Text(
+                                            '${BlocProvider.of<userDataCubit>(context).userDataModel!.trader!.firstName} ${BlocProvider.of<userDataCubit>(context).userDataModel!.trader!.lastName}',
+                                            style: Styles.textStyleTitle16
+                                                .copyWith(
+                                                    color: Color(0xffFCF6BA)),
+                                          ),
+                                        ],
+                                      ),
+                                      SizedBox(height: 18),
+                                      Row(
+                                        children: [
+                                          Text(
+                                            'Balance',
+                                            style: Styles.textStyleTitle16,
+                                          ),
+                                          SizedBox(
+                                            width: 20,
+                                          ),
+                                          Text(
+                                            '${BlocProvider.of<userDataCubit>(context).userDataModel!.trader!.balance}',
+                                            style: Styles.textStyleTitle16
+                                                .copyWith(
+                                                    color: Color(0xffFCF6BA)),
+                                          ),
+                                        ],
+                                      ),
+                                      SizedBox(height: 18),
+                                      Row(
+                                        children: [
+                                          Text(
+                                            'MBAG NO',
+                                            style: Styles.textStyleTitle16,
+                                          ),
+                                          SizedBox(
+                                            width: 20,
+                                          ),
+                                          Text(
+                                            '${BlocProvider.of<userDataCubit>(context).userDataModel!.trader!.iD}',
+                                            style: Styles.textStyleTitle16
+                                                .copyWith(
+                                                    color: Color(0xffFCF6BA)),
+                                          ),
+                                        ],
+                                      )
+                                    ],
+                                  ),
+                                ),
+                              ),
+                              SizedBox(
+                                height: 20.h,
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
                                   children: [
-                                    Row(
-                                      children: [
-                                        Text(
-                                          'Balance',
-                                          style: Styles.textStyleTitle16,
-                                        ),
-                                        SizedBox(
-                                          width: 20,
-                                        ),
-                                        Text(
-                                          '${BlocProvider.of<userDataCubit>(context).userDataModel!.trader!.balance}',
-                                          style: Styles.textStyleTitle16
-                                              .copyWith(
-                                                  color: Color(0xffFCF6BA)),
-                                        ),
-                                      ],
+                                    Text(
+                                      'Today sales',
+                                      style: Styles.textStyleTitle24
+                                          .copyWith(color: Color(0xffEEBB49)),
                                     ),
-                                    SizedBox(height: 18),
-                                    Row(
-                                      children: [
-                                        Text(
-                                          'IBAN',
-                                          style: Styles.textStyleTitle16,
-                                        ),
-                                        SizedBox(
-                                          width: 20,
-                                        ),
-                                        Text(
-                                          '${BlocProvider.of<userDataCubit>(context).userDataModel!.trader!.iD}',
-                                          style: Styles.textStyleTitle16
-                                              .copyWith(
-                                                  color: Color(0xffFCF6BA)),
-                                        ),
-                                      ],
-                                    )
+                                    Text(
+                                      '${BlocProvider.of<userDataCubit>(context).userDataModel!.trader!.todaySales} ',
+                                      style: Styles.textStyleTitle20,
+                                    ),
                                   ],
                                 ),
                               ),
-                            ),
-                            SizedBox(
-                              height: 20.h,
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text(
-                                    'Today sales',
-                                    style: Styles.textStyleTitle24
-                                        .copyWith(color: Color(0xffEEBB49)),
-                                  ),
-                                  Text(
-                                    '${BlocProvider.of<userDataCubit>(context).userDataModel!.trader!.todaySales} ',
-                                    style: Styles.textStyleTitle20,
-                                  ),
-                                ],
-                              ),
-                            ),
-                            _buildTransactionFrame(
-                              icon: Icons.access_time_filled,
-                              title: "Transaction",
-                              press: () {
-                                navigato(context, LastTransaction());
-                              },
-                            ),
-                            _buildTransactionFrame(
-                              icon: Icons.access_time_filled,
-                              title: "Profile",
-                              press: () {
-                                navigato(context, ProfileScreen());
-                              },
-                            ),
-                            SizedBox(
-                              height: 20.h,
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Button(
-                                textButton: 'pay',
-                                funcation: () {
-                                  navigato(context, VerifyScreen());
+                              _buildTransactionFrame(
+                                icon: Icons.access_time_filled,
+                                title: "Transaction",
+                                press: () {
+                                  navigato(context, LastTransaction());
                                 },
                               ),
-                            )
-                          ],
-                        ),
-                      ],
+                              _buildTransactionFrame(
+                                icon: Icons.access_time_filled,
+                                title: "Profile",
+                                press: () {
+                                  navigato(context, EditProfileScreen());
+                                },
+                              ),
+                              SizedBox(
+                                height: 20.h,
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Button(
+                                  textButton: 'pay',
+                                  funcation: () {
+                                    navigato(
+                                        context,
+                                        PayWithQrCodeScreen(
+                                            idNumber:
+                                                BlocProvider.of<userDataCubit>(
+                                                        context)
+                                                    .userDataModel!
+                                                    .trader!
+                                                    .iD!));
+                                  },
+                                ),
+                              )
+                            ],
+                          ),
+                        ],
+                      ),
                     ),
                   ),
+                  fallback: (context) => Center(
+                      child: CircularProgressIndicator(
+                    color: Color(0xffEEBB49),
+                  )),
                 ),
-                fallback: (context) => Center(
-                    child: CircularProgressIndicator(
-                  color: Color(0xffEEBB49),
-                )),
               ));
         },
       ),
